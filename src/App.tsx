@@ -1,16 +1,21 @@
-import React from 'react';
-import Button, {ButtonSize, ButtonType} from './components/Button/button';
+import React, {useState} from 'react';
+import Button from './components/Button/button';
 import Menu from './components/Menu/menu';
 import MenuItem from './components/Menu/menuItem';
 import SubMenu from './components/Menu/subMenu';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCoffee} from '@fortawesome/free-solid-svg-icons';
+import Icon from './components/Icon/icon';
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {fas} from '@fortawesome/free-solid-svg-icons';
+import Transition from './components/Transition/transition';
+
+library.add(fas);
 
 function App() {
+    const [show, setShow] = useState(false);
     return (
         <div className="App">
             <header className="App-header">
-                <FontAwesomeIcon icon={faCoffee} size="10x"/>
+                {/*<Icon icon="arrow-down" theme="danger"/>*/}
                 <hr/>
                 <Menu defaultIndex='0' onSelect={(index) => {
                     console.log(index);
@@ -24,6 +29,31 @@ function App() {
                     </SubMenu>
                     <MenuItem>cool link 3</MenuItem>
                 </Menu>
+                <Button btnType="primary" size="lg"
+                        onClick={() => {
+                            setShow(!show);
+                        }}
+                >toggle</Button>
+                <Transition in={show} timeout={300} animation="zoom-in-left">
+                    <div>
+                        <p>edit
+                            <code>src/app.tsx</code>
+                            and save to reload </p>
+                        <p>edit
+                            <code>src/app.tsx</code>
+                            and save to reload </p>
+                        <p>edit
+                            <code>src/app.tsx</code>
+                            and save to reload </p>
+                    </div>
+                </Transition>
+                <Transition
+                    in={show}
+                    timeout={300}
+                    animation="zoom-in-top"
+                    wrapper>
+                    <Button>A large button</Button>
+                </Transition>
                 <hr/>
                 <Menu defaultIndex='0' mode='vertical' defaultOpenSubMenus={['2']}
                       onSelect={(index) => {
@@ -40,19 +70,19 @@ function App() {
                 </Menu>
                 <hr/>
                 <Button>Default</Button>
-                <Button btnType={ButtonType.Primary}>Primary</Button>
-                <Button btnType={ButtonType.Danger}>Danger</Button>
-                <Button btnType={ButtonType.Link} href="http://www.baidu.com">Link</Button>
+                <Button btnType='primary'>Primary</Button>
+                <Button btnType='danger'>Danger</Button>
+                <Button btnType='link' href="http://www.baidu.com">Link</Button>
                 <hr/>
-                <Button btnType={ButtonType.Primary} size={ButtonSize.Small}>Primary</Button>
-                <Button btnType={ButtonType.Primary}>Primary</Button>
-                <Button btnType={ButtonType.Primary} size={ButtonSize.Large}>Primary</Button>
+                <Button btnType='primary' size='sm'>Primary</Button>
+                <Button btnType='primary'>Primary</Button>
+                <Button btnType='primary' size='lg'>Primary</Button>
                 <hr/>
-                <Button btnType={ButtonType.Primary}>primary</Button>
+                <Button btnType='primary'>primary</Button>
                 <Button disabled>disabled</Button>
-                <Button btnType={ButtonType.Link} size={ButtonSize.Small} href="http://www.baidu.com" target="_blank">
+                <Button btnType='link' size='sm' href="http://www.baidu.com" target="_blank">
                     Link</Button>
-                <Button disabled btnType={ButtonType.Link} size={ButtonSize.Small} href="http://www.baidu.com"> disabled
+                <Button disabled btnType='link' size='sm' href="http://www.baidu.com"> disabled
                     Link</Button>
                 <hr/>
             </header>
