@@ -21,7 +21,8 @@ const buttonWithType = () => (
     </>
 );
 
-storiesOf('Button Component', module)
-    .add('默认 Button', defaultButton)
-    .add('不同尺寸的 Button', buttonWithSize)
-    .add('不同类型的 Button', buttonWithType);
+
+storiesOf('Button 按钮', module)
+    .add('Button', defaultButton)
+    .add('不同尺寸的Button', buttonWithSize)
+    .add('不同类型的Button', buttonWithType);

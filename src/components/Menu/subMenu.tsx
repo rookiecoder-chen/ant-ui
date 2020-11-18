@@ -1,19 +1,20 @@
-import React, {FunctionComponentElement, useContext, useState} from 'react';
+import React, {FC,FunctionComponentElement, useContext, useState} from 'react';
 import classNames from 'classnames';
 import {MenuContext} from './menu';
 import {MenuItemProps} from './menuItem';
 import Icon from '../Icon/icon';
-import {CSSTransition} from 'react-transition-group';
 import Transition from '../Transition/transition';
 
 
 export interface SubMenuProps {
+    /** 当前是否选中的标识 */
     index?: string;
+    /** 下拉菜单的名称 */
     title: string;
     className?: string;
 }
 
-const SubMenu: React.FC<SubMenuProps> = ({index, title, children, className}) => {
+export const SubMenu: FC<SubMenuProps> = ({index, title, children, className}) => {
     const context = useContext(MenuContext);
     const openSubMenus = context.defaultOpenSubMenus as Array<string>;
     const isOpened = (index && context.mode === 'vertical') ? openSubMenus.includes(index) : false;
@@ -57,7 +58,7 @@ const SubMenu: React.FC<SubMenuProps> = ({index, title, children, className}) =>
             }
         });
         return (
-            <Transition in={menuOpen} timeout={300} animation="zoom-in-left">
+            <Transition in={menuOpen} timeout={300} animation="zoom-in-top">
                 <ul className={subMenuClasses}>
                     {childrenComponent}
                 </ul>
