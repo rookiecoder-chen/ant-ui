@@ -10,13 +10,13 @@ export const defaultMenu = () => (
         action(`clicked ${index} item`);
     }}>
         <MenuItem>
-            cool link
+            导航一
         </MenuItem>
         <MenuItem disabled>
             disabled
         </MenuItem>
         <MenuItem>
-            cool link 2
+            导航二
         </MenuItem>
     </Menu>
 );
@@ -26,16 +26,17 @@ export const horizontalMenu = () => (
         action(`clicked ${index} item`);
     }} mode='horizontal'>
         <MenuItem>
-            首页
+            导航一
         </MenuItem>
-        <SubMenu title='下拉菜单'>
-            <MenuItem>111</MenuItem>
-            <MenuItem>222</MenuItem>
-            <MenuItem>333</MenuItem>
-        </SubMenu>
         <MenuItem disabled>
-            关于
+            导航二
         </MenuItem>
+        <SubMenu title='个人中心'>
+            <MenuItem>账号信息</MenuItem>
+            <MenuItem>操作记录</MenuItem>
+            <MenuItem>退出登录</MenuItem>
+        </SubMenu>
+
     </Menu>
 );
 export const verticalMenu = () => (
@@ -43,19 +44,19 @@ export const verticalMenu = () => (
         action(`clicked ${index} item`);
     }} mode='vertical'>
         <MenuItem>
-            cool link
+            导航一
         </MenuItem>
         <MenuItem disabled>
-            disabled
+            导航二
         </MenuItem>
-        <SubMenu title='下拉菜单'>
-            <MenuItem>1</MenuItem>
-            <MenuItem>2</MenuItem>
-            <MenuItem>3</MenuItem>
+        <SubMenu title='个人中心'>
+            <MenuItem>账号信息</MenuItem>
+            <MenuItem>操作记录</MenuItem>
+            <MenuItem>退出登录</MenuItem>
         </SubMenu>
     </Menu>
 );
-storiesOf('Menu Component', module)
+storiesOf('Menu 菜单', module)
     .add('Menu', defaultMenu)
     .add('horizontalMenu', horizontalMenu)
     .add('verticalMenu', verticalMenu);
