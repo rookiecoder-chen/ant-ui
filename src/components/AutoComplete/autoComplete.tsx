@@ -1,4 +1,4 @@
-import React, {FC, useState, ChangeEvent, KeyboardEvent, ReactElement, useEffect} from 'react';
+import React, {FC, useState, ChangeEvent, KeyboardEvent, ReactElement, useEffect, useRef} from 'react';
 import Input, {InputProps} from '../Input/input';
 import Icon from '../Icon/icon';
 import useDebounce from '../../hooks/useDebounce';
@@ -25,9 +25,10 @@ export const Autocomplete: FC<AutoCompleteProps> = (props) => {
     const [loading, setLoading] = useState(false);
     const debounceValue = useDebounce(inputValue, 500);
     const [highlightIndex, setHighlightIndex] = useState(-1);
+    const triggerSearch = useRef(false);
 
     useEffect(() => {
-        if (debounceValue) {
+        if (debounceValue && triggerSearch.current) {
             const results = fetchSuggestions(debounceValue);
             if (results instanceof Promise) {
                 setLoading(true);
@@ -46,6 +47,7 @@ export const Autocomplete: FC<AutoCompleteProps> = (props) => {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.trim();
         setInputValue(value);
+        triggerSearch.current = true;
 
     };
     const handleSelect = (item: DataSourceType) => {
@@ -54,6 +56,7 @@ export const Autocomplete: FC<AutoCompleteProps> = (props) => {
         if (onSelect) {
             onSelect(item);
         }
+        triggerSearch.current = false;
     };
     const renderTemplate = (item: DataSourceType) => {
         return renderOption ? renderOption(item) : item.value;
