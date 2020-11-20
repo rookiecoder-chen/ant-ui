@@ -80,6 +80,6 @@ const asyncAutoComplete = () => {
         </>
     );
 };
-storiesOf('AutoComplete自动完成', module)
+storiesOf('AutoComplete 自动完成', module)
     .add('AutoComplete', SimpleAutoComplete)
     .add('异步请求的AutoComplete', asyncAutoComplete);

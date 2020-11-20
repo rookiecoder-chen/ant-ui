@@ -69,4 +69,4 @@ const differentDirectionTransition = () => {
 
 storiesOf("Transition Component", module)
     .add("Transition", defaultTransition)
-    .add("不同方向显示隐藏的Transition", differentDirectionTransition);
+    .add("不同方向的Transition", differentDirectionTransition);

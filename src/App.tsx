@@ -1,93 +1,40 @@
-import React, {useState} from 'react';
-import Button from './components/Button/button';
-import Menu from './components/Menu/menu';
-import MenuItem from './components/Menu/menuItem';
-import SubMenu from './components/Menu/subMenu';
-import Icon from './components/Icon/icon';
-import {library} from '@fortawesome/fontawesome-svg-core';
-import {fas} from '@fortawesome/free-solid-svg-icons';
-import Transition from './components/Transition/transition';
+import React, {FC, useEffect, useState} from 'react';
+import axios from 'axios';
 
-library.add(fas);
-
-function App() {
-    const [show, setShow] = useState(false);
+const App: FC = () => {
+    const [title, setTitle] = useState('');
+    const postData = {
+        title: 'my title',
+        body: 'hello man'
+    };
+    useEffect(() => {
+        axios.post('https://jsonplaceholder.typicode.com/posts', postData)
+            .then(response => {
+                setTitle(response.data.title);
+            });
+    });
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if (files) {
+            const uploadedFile = files[0];
+            const formData = new FormData();
+            formData.append(uploadedFile.name, uploadedFile);
+            axios.post('https://jsonplaceholder.typicode.com/posts',formData,{
+                headers:{
+                    'Content-Type':'multipart/form-data'
+                }
+            }).then(response=>{
+                console.log(response);
+            })
+        }
+    };
     return (
         <div className="App">
             <header className="App-header">
-                {/*<Icon icon="arrow-down" theme="danger"/>*/}
-                <hr/>
-                <Menu defaultIndex='0' onSelect={(index) => {
-                    console.log(index);
-                }}>
-                    <MenuItem>cool link</MenuItem>
-                    <MenuItem disabled>cool link 2</MenuItem>
-                    <SubMenu title="dropdown">
-                        <MenuItem>dropdown 1</MenuItem>
-                        <MenuItem>dropdown 2</MenuItem>
-                        <MenuItem>dropdown 3</MenuItem>
-                    </SubMenu>
-                    <MenuItem>cool link 3</MenuItem>
-                </Menu>
-                <Button btnType="primary" size="lg"
-                        onClick={() => {
-                            setShow(!show);
-                        }}
-                >toggle</Button>
-                <Transition in={show} timeout={300} animation="zoom-in-left">
-                    <div>
-                        <p>edit
-                            <code>src/app.tsx</code>
-                            and save to reload </p>
-                        <p>edit
-                            <code>src/app.tsx</code>
-                            and save to reload </p>
-                        <p>edit
-                            <code>src/app.tsx</code>
-                            and save to reload </p>
-                    </div>
-                </Transition>
-                <Transition
-                    in={show}
-                    timeout={300}
-                    animation="zoom-in-top"
-                    wrapper>
-                    <Button>A large button</Button>
-                </Transition>
-                <hr/>
-                <Menu defaultIndex='0' mode='vertical' defaultOpenSubMenus={['2']}
-                      onSelect={(index) => {
-                          console.log(index);
-                      }}>
-                    <MenuItem>cool link</MenuItem>
-                    <MenuItem disabled>cool link 2</MenuItem>
-                    <SubMenu title="dropdown">
-                        <MenuItem>dropdown 1</MenuItem>
-                        <MenuItem>dropdown 2</MenuItem>
-                        <MenuItem>dropdown 3</MenuItem>
-                    </SubMenu>
-                    <MenuItem>cool link 3</MenuItem>
-                </Menu>
-                <hr/>
-                <Button>Default</Button>
-                <Button btnType='primary'>Primary</Button>
-                <Button btnType='danger'>Danger</Button>
-                <Button btnType='link' href="http://www.baidu.com">Link</Button>
-                <hr/>
-                <Button btnType='primary' size='sm'>Primary</Button>
-                <Button btnType='primary'>Primary</Button>
-                <Button btnType='primary' size='lg'>Primary</Button>
-                <hr/>
-                <Button btnType='primary'>primary</Button>
-                <Button disabled>disabled</Button>
-                <Button btnType='link' size='sm' href="http://www.baidu.com" target="_blank">
-                    Link</Button>
-                <Button disabled btnType='link' size='sm' href="http://www.baidu.com"> disabled
-                    Link</Button>
-                <hr/>
+                <input type="file" name="myFile" onChange={handleFileChange}/>
             </header>
         </div>
     );
-}
+};
 
 export default App;
