@@ -14,11 +14,20 @@ interface DataSourceObject {
 export type DataSourceType<T = {}> = T & DataSourceObject
 
 export interface AutoCompleteProps extends Omit<InputProps, 'onSelect'> {
+    /** 用户自定义实现筛选数据的方法（支持异步请求数据）*/
     fetchSuggestions: (str: string) => DataSourceType[] | Promise<DataSourceType[]>
+    /** 用户选择下拉菜单中的值触发的方法 */
     onSelect?: (item: DataSourceType) => void
+    /** 用户自定义下拉菜单样式 */
     renderOption?: (item: DataSourceType) => ReactElement
 }
 
+/**
+ * ### 引入方式
+ * ~~~js
+ * import { AutoComplete } from "ant-ui"
+ * ~~~
+ */
 export const Autocomplete: FC<AutoCompleteProps> = (props) => {
     const {value, fetchSuggestions, onSelect, renderOption, ...restProps} = props;
     //inputValue来自Input组件
@@ -28,7 +37,9 @@ export const Autocomplete: FC<AutoCompleteProps> = (props) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const debounceValue = useDebounce(inputValue, 500);
     const [highlightIndex, setHighlightIndex] = useState(-1);
+    // 希望在选中数据后 不会再次进行搜索
     const triggerSearch = useRef(false);
+    // 指向组件的Dom节点 传入泛型 因为最外层是div
     const componentRef = useRef<HTMLDivElement>(null);
     useClickOutsize(componentRef, () => {
         setSuggestions([]);
@@ -137,8 +148,7 @@ export const Autocomplete: FC<AutoCompleteProps> = (props) => {
     return (
         <div className='ant-auto-complete' ref={componentRef}>
             <Input value={inputValue} {...restProps} onChange={handleChange} onKeyDown={handleKeyDown}/>
-            {loading && <ul><Icon icon='spinner' spin/></ul>}
-            {(suggestions.length > 0) && generateDropdown()}
+            {generateDropdown()}
         </div>
     );
 };

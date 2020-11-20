@@ -14,7 +14,7 @@ interface GithubUserProps {
     avatar_url: string
 }
 
-const SimpleComplete = () => {
+const SimpleAutoComplete = () => {
     const lakers = ['bradley', 'pope', 'caruso', 'cook', 'cousins', 'james', 'AD', 'green', 'howard', 'kuzma', 'McGee', 'rando'];
     const lakersWithNumber = [
         {value: 'bradley', number: 11},
@@ -31,9 +31,9 @@ const SimpleComplete = () => {
     // const handleFetch = (query: string) => {
     //     return lakers.filter(name => name.includes(query)).map(name => ({value: name}));
     // };
-    // const handleFetch = (query: string) => {
-    //     return lakersWithNumber.filter(player => player.value.includes(query));
-    // };
+    const handleFetch = (query: string) => {
+        return lakersWithNumber.filter(player => player.value.includes(query));
+    };
     // const renderOption = (item: DataSourceType<LakerPlayerProps>) => {
     //     return (
     //         <>
@@ -42,13 +42,6 @@ const SimpleComplete = () => {
     //         </>
     //     );
     // };
-    const handleFetch = (query: string) => {
-        return fetch(`https://api.github.com/search/users?q=${query}`)
-            .then(res => res.json())
-            .then(({items}) => {
-                return items.slice(0, 10).map((item: { login: any; }) => ({value: item.login, ...item}));
-            });
-    };
     const renderOption = (item: DataSourceType<GithubUserProps>) => {
         return (
             <>
@@ -60,6 +53,7 @@ const SimpleComplete = () => {
     return (
         <>
             <Autocomplete
+                style={{width:'300px'}}
                 fetchSuggestions={handleFetch}
                 onSelect={action('selected')}
                 // renderOption={renderOption}
@@ -68,5 +62,24 @@ const SimpleComplete = () => {
     );
 };
 
+const asyncAutoComplete = () => {
+    const handleFetch = (query: string) => {
+        return fetch(`https://api.github.com/search/users?q=${query}`)
+            .then(res => res.json())
+            .then(({items}) => {
+                return items.slice(0, 10).map((item: { login: any; }) => ({value: item.login, ...item}));
+            });
+    };
+    return (
+        <>
+            <Autocomplete
+                placeholder="请求Github用户的API"
+                style={{width:'300px'}}
+                fetchSuggestions={handleFetch}
+                onSelect={action('selected')}/>
+        </>
+    );
+};
 storiesOf('AutoComplete自动完成', module)
-    .add('AutoComplete', SimpleComplete);
+    .add('AutoComplete', SimpleAutoComplete)
+    .add('异步请求的AutoComplete', asyncAutoComplete);
