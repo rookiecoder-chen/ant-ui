@@ -3,6 +3,7 @@ import Input, {InputProps} from '../Input/input';
 import Icon from '../Icon/icon';
 import useDebounce from '../../hooks/useDebounce';
 import classNames from 'classnames';
+import useClickOutsize from '../../hooks/useClickOutsize';
 
 
 interface DataSourceObject {
@@ -26,6 +27,10 @@ export const Autocomplete: FC<AutoCompleteProps> = (props) => {
     const debounceValue = useDebounce(inputValue, 500);
     const [highlightIndex, setHighlightIndex] = useState(-1);
     const triggerSearch = useRef(false);
+    const componentRef = useRef<HTMLDivElement>(null);
+    useClickOutsize(componentRef, () => {
+        setSuggestions([]);
+    });
 
     useEffect(() => {
         if (debounceValue && triggerSearch.current) {
@@ -113,7 +118,7 @@ export const Autocomplete: FC<AutoCompleteProps> = (props) => {
         }
     };
     return (
-        <div className='ant-auto-complete'>
+        <div className='ant-auto-complete' ref={componentRef}>
             <Input value={inputValue} {...restProps} onChange={handleChange} onKeyDown={handleKeyDown}/>
             {loading && <ul><Icon icon='spinner' spin/></ul>}
             {(suggestions.length > 0) && generateDropdown()}
