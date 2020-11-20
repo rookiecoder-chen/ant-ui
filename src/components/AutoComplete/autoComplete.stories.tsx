@@ -8,6 +8,12 @@ interface LakerPlayerProps {
     number: number
 }
 
+interface GithubUserProps {
+    login: string
+    url: string
+    avatar_url: string
+}
+
 const SimpleComplete = () => {
     const lakers = ['bradley', 'pope', 'caruso', 'cook', 'cousins', 'james', 'AD', 'green', 'howard', 'kuzma', 'McGee', 'rando'];
     const lakersWithNumber = [
@@ -41,15 +47,23 @@ const SimpleComplete = () => {
             .then(res => res.json())
             .then(({items}) => {
                 console.log(items);
-                return items.slice(0,10).map(item =>({value:item.login,...item}))
+                return items.slice(0, 10).map(item => ({value: item.login, ...item}));
             });
+    };
+    const renderOption = (item: DataSourceType<GithubUserProps>) => {
+        return (
+            <>
+                <h2>Name:{item.login}</h2>
+                <p>Number:{item.url}</p>
+            </>
+        );
     };
     return (
         <>
             <Autocomplete
                 fetchSuggestions={handleFetch}
                 onSelect={action('selected')}
-                // renderOption={renderOption}
+                renderOption={renderOption}
             />
         </>
     );
