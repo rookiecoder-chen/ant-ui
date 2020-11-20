@@ -1,7 +1,8 @@
-import React, {FC, useState, ChangeEvent, ReactElement, useEffect} from 'react';
+import React, {FC, useState, ChangeEvent, KeyboardEvent, ReactElement, useEffect} from 'react';
 import Input, {InputProps} from '../Input/input';
 import Icon from '../Icon/icon';
 import useDebounce from '../../hooks/useDebounce';
+import classNames from 'classnames';
 
 
 interface DataSourceObject {
@@ -23,6 +24,8 @@ export const Autocomplete: FC<AutoCompleteProps> = (props) => {
     const [suggestions, setSuggestions] = useState<DataSourceType[]>([]);
     const [loading, setLoading] = useState(false);
     const debounceValue = useDebounce(inputValue, 500);
+    const [highlightIndex, setHighlightIndex] = useState(-1);
+
     useEffect(() => {
         if (debounceValue) {
             const results = fetchSuggestions(debounceValue);
@@ -38,6 +41,7 @@ export const Autocomplete: FC<AutoCompleteProps> = (props) => {
         } else {
             setSuggestions([]);
         }
+        setHighlightIndex(-1);
     }, [debounceValue]);
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.trim();
@@ -58,8 +62,11 @@ export const Autocomplete: FC<AutoCompleteProps> = (props) => {
         return (
             <ul>
                 {suggestions.map((item, index) => {
+                    const cnames = classNames('suggestion-item', {
+                        'item-highlighted': index === highlightIndex
+                    });
                     return (
-                        <li key={index} onClick={() => {
+                        <li key={index} className={cnames} onClick={() => {
                             handleSelect(item);
                         }}>
                             {renderTemplate(item)}
@@ -69,9 +76,42 @@ export const Autocomplete: FC<AutoCompleteProps> = (props) => {
             </ul>
         );
     };
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        const highlight = (index: number) => {
+            if (index < 0) {
+                index = 0;
+            }
+            if (index >= suggestions.length) {
+                index = suggestions.length - 1;
+            }
+            setHighlightIndex(index);
+        };
+        switch (e.keyCode) {
+            //回车
+            case 13:
+                if (suggestions[highlightIndex]) {
+                    handleSelect(suggestions[highlightIndex]);
+                }
+                break;
+            //上方向键
+            case 38:
+                highlight(highlightIndex - 1);
+                break;
+            //下方向键
+            case 40:
+                highlight(highlightIndex + 1);
+                break;
+            //esc键
+            case 27:
+                setSuggestions([]);
+                break;
+            default:
+                break;
+        }
+    };
     return (
         <div className='ant-auto-complete'>
-            <Input value={inputValue} {...restProps} onChange={handleChange}/>
+            <Input value={inputValue} {...restProps} onChange={handleChange} onKeyDown={handleKeyDown}/>
             {loading && <ul><Icon icon='spinner' spin/></ul>}
             {(suggestions.length > 0) && generateDropdown()}
         </div>

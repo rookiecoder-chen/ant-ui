@@ -63,7 +63,7 @@ const SimpleComplete = () => {
             <Autocomplete
                 fetchSuggestions={handleFetch}
                 onSelect={action('selected')}
-                renderOption={renderOption}
+                // renderOption={renderOption}
             />
         </>
     );
