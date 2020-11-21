@@ -18,14 +18,14 @@ const storyWrapper = (stroyFn: any) => (
 addDecorator(storyWrapper)
 addDecorator(withInfo)
 addParameters({info: { inline: true, header: false}})
-// const loaderFn = () => {
-//   const allExports = [require('../src/welcome.stories.tsx')];
-//   const req = require.context('../src/components', true, /\.stories\.tsx$/);
-//   req.keys().forEach(fname => allExports.push(req(fname)));
-//   return allExports;
-// };
+const loaderFn = () => {
+  const allExports = [require('../src/welcome.stories.tsx')];
+  const req = require.context('../src/components', true, /\.stories\.tsx$/);
+  req.keys().forEach(fname => allExports.push(req(fname)));
+  return allExports;
+};
 
 
 // automatically import all files ending in *.stories.js
-// configure(loaderFn, module);
-configure(require.context('../src/components', true, /\.stories\.tsx$/),module);
+configure(loaderFn, module);
+// configure(require.context('../src/components', true, /\.stories\.tsx$/),module);
