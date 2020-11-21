@@ -30,6 +30,8 @@ const SimpleUpload = () => {
             name="fileName"
             data={{'key': 'value'}}
             headers={{'X-Powered-By': 'ant-ui'}}
+            accept={'.jpg'}
+            multiple
         />
     );
 };
