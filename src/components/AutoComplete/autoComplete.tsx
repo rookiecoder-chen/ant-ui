@@ -25,7 +25,7 @@ export interface AutoCompleteProps extends Omit<InputProps, 'onSelect'> {
 /**
  * ### 引入方式
  * ~~~js
- * import { AutoComplete } from "ant-ui"
+ * import { AutoComplete } from "taozi-ui"
  * ~~~
  */
 export const Autocomplete: FC<AutoCompleteProps> = (props) => {

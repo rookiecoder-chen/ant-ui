@@ -4,7 +4,7 @@ export var MenuContext = createContext({ index: '0' });
 /**
  * 为网站提供导航功能的菜单。支持横向纵向两种模式，支持下拉菜单。
  * ~~~js
- * import { Menu } from 'ant-ui'
+ * import { Menu } from 'taozi-ui'
  * ~~~
  */
 export var Menu = function (props) {

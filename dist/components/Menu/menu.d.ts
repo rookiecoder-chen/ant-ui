@@ -22,7 +22,7 @@ export declare const MenuContext: React.Context<IMenuContext>;
 /**
  * 为网站提供导航功能的菜单。支持横向纵向两种模式，支持下拉菜单。
  * ~~~js
- * import { Menu } from 'ant-ui'
+ * import { Menu } from 'taozi-ui'
  * ~~~
  */
 export declare const Menu: FC<MenuProps>;

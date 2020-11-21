@@ -55,7 +55,7 @@ export interface UploadProps {
 /**
  * ### 引入方式
  * ~~~js
- * import { Upload } from "ant-ui"
+ * import { Upload } from "taozi-ui"
  * ~~~
  */
 export declare const Upload: FC<UploadProps>;

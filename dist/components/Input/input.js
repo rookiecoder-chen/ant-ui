@@ -28,7 +28,7 @@ import Icon from '../Icon/icon';
  *
  * ~~~js
  * // 这样引用
- * import { Input } from 'ant-ui'
+ * import { Input } from 'taozi-ui'
  * ~~~
  * 支持 HTMLInput 的所有基本属性
  */

@@ -1,21 +1,21 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react';
 import {action} from '@storybook/addon-actions';
-import Autocomplete, {DataSourceType} from './autoComplete';
+import Autocomplete from './autoComplete';
 
-interface LakerPlayerProps {
-    value: string
-    number: number
-}
-
-interface GithubUserProps {
-    login: string
-    url: string
-    avatar_url: string
-}
+// interface LakerPlayerProps {
+//     value: string
+//     number: number
+// }
+//
+// interface GithubUserProps {
+//     login: string
+//     url: string
+//     avatar_url: string
+// }
 
 const SimpleAutoComplete = () => {
-    const lakers = ['bradley', 'pope', 'caruso', 'cook', 'cousins', 'james', 'AD', 'green', 'howard', 'kuzma', 'McGee', 'rando'];
+    // const lakers = ['bradley', 'pope', 'caruso', 'cook', 'cousins', 'james', 'AD', 'green', 'howard', 'kuzma', 'McGee', 'rando'];
     const lakersWithNumber = [
         {value: 'bradley', number: 11},
         {value: 'pope', number: 1},
@@ -42,14 +42,14 @@ const SimpleAutoComplete = () => {
     //         </>
     //     );
     // };
-    const renderOption = (item: DataSourceType<GithubUserProps>) => {
-        return (
-            <>
-                <h2>Name:{item.login}</h2>
-                <p>Number:{item.url}</p>
-            </>
-        );
-    };
+    // const renderOption = (item: DataSourceType<GithubUserProps>) => {
+    //     return (
+    //         <>
+    //             <h2>Name:{item.login}</h2>
+    //             <p>Number:{item.url}</p>
+    //         </>
+    //     );
+    // };
     return (
         <>
             <Autocomplete

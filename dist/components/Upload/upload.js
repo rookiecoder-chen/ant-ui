@@ -23,7 +23,7 @@ import Dragger from './dragger';
 /**
  * ### 引入方式
  * ~~~js
- * import { Upload } from "ant-ui"
+ * import { Upload } from "taozi-ui"
  * ~~~
  */
 export var Upload = function (props) {

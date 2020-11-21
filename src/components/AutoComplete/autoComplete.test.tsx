@@ -1,33 +1,39 @@
-import React from 'react';
-import {config} from 'react-transition-group';
-import {render, RenderResult, fireEvent, wait} from '@testing-library/react';
-import AutoComplete, {AutoCompleteProps} from './autoComplete';
+import React from "react";
+import { config } from "react-transition-group";
+import { render, RenderResult, fireEvent, waitFor } from "@testing-library/react";
+import AutoComplete, {AutoCompleteProps } from "./autoComplete";
 
+// 使transition组件的异步变为同步操作
 config.disabled = true;
 
+// 自定义测试样例
 const testArray = [
-    {value: 'ab', number: 11},
-    {value: 'abc', number: 1},
-    {value: 'b', number: 4},
-    {value: 'c', number: 15},
+    { value: "ab", number: 11 },
+    { value: "abc", number: 1 },
+    { value: "b", number: 4 },
+    { value: "c", number: 15 },
 ];
+
 const testProps: AutoCompleteProps = {
     fetchSuggestions: (query) => {
-        return testArray.filter(item => item.value.includes(query));
+        return testArray.filter((item) => item.value.includes(query));
     },
     onSelect: jest.fn(),
-    placeholder: 'auto-complete'
+    placeholder: "auto-complete",
 };
-let wrapper: RenderResult, inputNode: HTMLInputElement;
+
+let wrapper: RenderResult, inputNode: HTMLInputElement
+
 describe('test AutoComplete component', () => {
     beforeEach(() => {
-        wrapper = render(<AutoComplete {...testProps}/>);
-        inputNode = wrapper.getByPlaceholderText('auto-complete') as HTMLInputElement;
-    });
+        wrapper = render(<AutoComplete {...testProps}/>)
+        inputNode = wrapper.getByPlaceholderText('auto-complete') as HTMLInputElement
+    })
+    // 基本行为测试 input点击展示下拉菜单等
     it('test basic AutoComplete behavior', async () => {
         // input change
         fireEvent.change(inputNode, {target: { value: 'a'}})
-        await wait(() => {
+        await waitFor(() => {
             expect(wrapper.queryByText('ab')).toBeInTheDocument()
         })
         // should have two suggestion items
@@ -39,10 +45,11 @@ describe('test AutoComplete component', () => {
         //fill the input
         expect(inputNode.value).toBe('ab')
     })
+    // 键盘支持测试
     it('should provide keyboard support', async () => {
         // input change
         fireEvent.change(inputNode, {target: { value: 'a'}})
-        await wait(() => {
+        await waitFor(() => {
             expect(wrapper.queryByText('ab')).toBeInTheDocument()
         })
         const firstResult = wrapper.queryByText('ab')
@@ -62,14 +69,22 @@ describe('test AutoComplete component', () => {
         expect(testProps.onSelect).toHaveBeenCalledWith({value: 'ab', number: 11})
         expect(wrapper.queryByText('ab')).not.toBeInTheDocument()
     })
+    // 点击空白行为测试
     it('click outside should hide the dropdown', async () => {
         // input change
         fireEvent.change(inputNode, {target: { value: 'a'}})
-        await wait(() => {
+        await waitFor(() => {
             expect(wrapper.queryByText('ab')).toBeInTheDocument()
         })
         fireEvent.click(document)
         expect(wrapper.queryByText('ab')).not.toBeInTheDocument()
     })
-});
+    // 自定义显示功能
+    it('renderOption should generate the right template', () => {
 
+    })
+    // 异步测试
+    it('async fetchSuggestions should works fine', () => {
+
+    })
+})

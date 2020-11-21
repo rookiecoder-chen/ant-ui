@@ -1,6 +1,5 @@
 import React, {ChangeEvent, FC, useRef, useState} from 'react';
 import axios from 'axios';
-import Button from '../Button/button';
 import UploadList from './uploadList';
 import Dragger from './dragger';
 
@@ -62,7 +61,7 @@ export interface UploadProps {
 /**
  * ### 引入方式
  * ~~~js
- * import { Upload } from "ant-ui"
+ * import { Upload } from "taozi-ui"
  * ~~~
  */
 export const Upload: FC<UploadProps> = (props) => {

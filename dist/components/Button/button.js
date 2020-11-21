@@ -27,7 +27,7 @@ import classNames from 'classnames';
  * ### 引用方法
  *
  * ~~~js
- * import { Button } from 'ant-ui'
+ * import { Button } from 'taozi-ui'
  * ~~~
  */
 export var Button = function (props) {

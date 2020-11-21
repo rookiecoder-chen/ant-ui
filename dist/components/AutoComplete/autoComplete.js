@@ -30,7 +30,7 @@ import Transition from '../Transition/transition';
 /**
  * ### 引入方式
  * ~~~js
- * import { AutoComplete } from "ant-ui"
+ * import { AutoComplete } from "taozi-ui"
  * ~~~
  */
 export var Autocomplete = function (props) {
