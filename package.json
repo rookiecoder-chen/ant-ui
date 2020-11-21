@@ -2,6 +2,9 @@
   "name": "ant-ui",
   "version": "0.1.0",
   "private": true,
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -23,9 +26,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "clean": "rimraf ./dist",
+    "build": "npm run clean && npm run build-ts && npm run build-css",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "build-ts": "tsc -p tsconfig.build.json",
+    "build-css": "node-sass ./src/styles/index.scss ./dist/index.css",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
   },
@@ -59,9 +65,10 @@
     "@storybook/react": "^5.2.8",
     "@types/classnames": "^2.2.11",
     "@types/react-transition-group": "^4.4.0",
-    "node-sass": "npm:dart-sass",
+    "node-sass": "^4.13.0",
     "react-docgen-typescript-loader": "^3.7.2",
     "react-docgen-typescript-plugin": "^0.6.2",
-    "react-is": "^17.0.1"
+    "react-is": "^17.0.1",
+    "rimraf": "^3.0.2"
   }
 }
