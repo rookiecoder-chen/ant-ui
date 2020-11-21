@@ -22,10 +22,14 @@ const SimpleUpload = () => {
     };
     return (
         <Upload
-            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            action="https://run.mocky.io/v3/48969418-7129-4af7-a3eb-840198a8a97b"
             onChange={action('changed')}
             defaultFileList={defaultFileList}
             onRemove={action('removed')}
+            name="fileName"
+            data={{'key': 'value'}}
+            headers={{'X-Powered-By': 'ant-ui'}}
         />
     );
 };
